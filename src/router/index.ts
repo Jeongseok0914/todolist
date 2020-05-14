@@ -1,14 +1,14 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import Home from "../views/Home.vue";
+import todoList from "@/views/todoList/index.vue";
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    name: "Home",
-    component: Home
+    name: "todoList",
+    component: todoList
   },
   {
     path: "/about",
