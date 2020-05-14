@@ -1,0 +1,84 @@
+
+/* font */
+@import '~@/styles/font/fonts.css';
+// $font-family: 'Noto Sans KR', Malgun Gothic, Dotum, Arial, Helvetica, sans-serif;
+$font-family: 'NanumSquareRound', Malgun Gothic, Dotum, Arial, Helvetica, sans-serif;
+$font-family-roboto: 'Roboto', Malgun Gothic, Dotum, Arial, Helvetica,
+  sans-serif;
+
+$font-size1: 36px;
+$font-size2: 24px;
+$font-size3: 18px;
+$font-size4: 16px;
+$font-size5: 14px;
+$font-size6: 13px;
+$font-size7: 12px;
+
+$font-regular: 400;
+$font-medium: 500;
+$font-bold: 700;
+
+/* color */
+$col-primary: #006ce6;
+
+$col-light-color: #1a8cfc;
+$col-secondary: #ee2737;
+
+$col-prim-l1: #e6f1fd;
+$col-prim-l2: #cce2fa;
+$col-prim-l3: #99c4f5;
+$col-prim-l4: #66a7f0;
+$col-prim-l5: #3389eb;
+
+$col-prim-d1: #0056b8;
+$col-prim-d2: #004ba1;
+$col-prim-d3: #00418a;
+$col-prim-d4: #003673;
+$col-prim-d5: #002b5c;
+
+/* Corrent Color of the Text */
+$col-neutral-00: #101010;
+
+$col-neutral-01: #000;
+$col-neutral-02: #333;
+$col-neutral-03: #5a5a5a;
+$col-neutral-04: #767676;
+$col-neutral-05: #959595;
+$col-neutral-06: #a5a5a5;
+$col-neutral-07: #ccc;
+$col-neutral-08: #dbdbdb;
+$col-neutral-09: #eaeaea;
+$col-neutral-10: #f7f7f7;
+$col-neutral-11: #fff;
+
+$col-white: $col-neutral-11;
+$col-black: $col-neutral-01;
+
+$col-bg-grey: #1d212f;
+$col-bg-grey-d: #11131e;
+$col-bg-grey-l: #f6f6f6;
+$col-text-grey: #353535;
+
+/* shadow & transparent*/
+// $col-shadow-dark: rgba(0, 0, 0, 0.2);
+// $col-shadow-light: rgba(255, 255, 255, 0.4);
+// $col-transparent: rgba(0, 0, 0, 0);
+
+// $col-shadow: $col-shadow-dark;
+
+// $col-comp-border: $col-neutral-10;
+// $col-comp-back: $col-white;
+
+// $col-active: $col-primary;
+
+/* frame colors */
+// $col-frm-gnb-back: $col-white;
+// $col-frm-gnb-col: $col-black;
+// $col-frm-gnb-menu-hover: transparent;
+// $col-frm-gnb-menu-active-color: $col-primary;
+
+// $col-frm-lnb-title-back: $col-white;
+// $col-frm-lnb-title-col: $col-neutral-03;
+// $col-frm-lnb-left-back: $col-white;
+// $col-frm-lnb-left-active-back: $col-white;
+// $col-frm-lnb-left-active-col: $col-primary;

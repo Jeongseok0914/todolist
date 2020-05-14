@@ -2,10 +2,12 @@ import store from '@/store'
 
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import { TodoListState } from './type'
+import { DEFAULT_TOTOLIST } from './default'
+import { cloneDeep } from 'lodash'
 
 @Module({dynamic: true, store, name: 'todoListStore'})
 class TodoListStore extends VuexModule implements TodoListState {
-    public title = 'init'
+    public todoListItem = cloneDeep(DEFAULT_TOTOLIST)
 
     @Mutation
     private SET_CHANGE_VALUE(payload: {key: string, value: any}) {

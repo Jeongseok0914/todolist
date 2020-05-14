@@ -1,4 +1,11 @@
 
 export interface TodoListState {
-    title: string
+    todoListItem: todoListItem[]
+}
+
+export interface todoListItem {
+    todoListTitle: string
+    todoListContent: string
+    todoListDate: string
+    todoListSucces: boolean
 }
