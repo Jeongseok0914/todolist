@@ -4,3 +4,5 @@ declare module '*.vue' {
 }
 
 declare module 'vuedraggable'
+
+declare module 'element-ui/lib/locale/lang/ko'

@@ -1,7 +1,7 @@
 import store from '@/store'
 
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import { TodoListState } from './type'
+import { TodoListState, todoListItemInfo } from './type'
 import { DEFAULT_TOTOLIST } from './default'
 import { cloneDeep } from 'lodash'
 
@@ -10,16 +10,29 @@ class TodoListStore extends VuexModule implements TodoListState {
   public todoListItem = cloneDeep(DEFAULT_TOTOLIST)
 
   @Mutation
-  private SET_CHANGE_VALUE(payload: { key: string; value: any }) {
-    const { key, value } = payload
-    if (Object.prototype.hasOwnProperty.call(this, key)) {
-      ;(this as any)[key] = value
-    }
+  private SET_TODO_LIST_ITEM(todolistItem: todoListItemInfo) {
+    this.todoListItem.unshift(todolistItem)
+  }
+
+  @Mutation
+  private DEL_TODO_LIST_ITEM(todolistItem: todoListItemInfo[]) {
+    this.todoListItem = todolistItem
   }
 
   @Action({ rawError: true })
-  public setChangeValue(payload: { key: string; value: any }) {
-    this.SET_CHANGE_VALUE(payload)
+  public setTodoListItem(todolistItem: todoListItemInfo) {
+    this.SET_TODO_LIST_ITEM(todolistItem)
+  }
+
+  @Action({ rawError: true })
+  public delTodoListItem(todolistItem: todoListItemInfo) {
+    const filterList: todoListItemInfo[] = this.todoListItem.filter(item => {
+      if (item !== todolistItem) {
+        return { ...item }
+      }
+    })
+    console.log(filterList)
+    this.DEL_TODO_LIST_ITEM(filterList)
   }
 }
 

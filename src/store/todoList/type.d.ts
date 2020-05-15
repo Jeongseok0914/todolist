@@ -2,9 +2,9 @@ export interface TodoListState {
   todoListItem: todoListItem[]
 }
 
-export interface todoListItem {
+export interface todoListItemInfo {
   todoListTitle: string
   todoListContent: string
   todoListDate: string
-  todoListSucces: boolean
+  todoListStatus: boolean
 }
