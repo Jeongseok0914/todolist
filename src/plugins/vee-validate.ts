@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Vue from 'vue'
 import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate'
 import ko from 'vee-validate/dist/locale/ko.json'

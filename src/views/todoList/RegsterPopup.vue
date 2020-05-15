@@ -2,13 +2,13 @@
   <div>
     <el-dialog :visible.sync="dialogVisible" title="TO-DO LIST ADD" :before-close="handleClose" width="500px" top>
       <ValidationObserver ref="registerForm" tag="form">
-          <el-row>
-              123
-          </el-row>
+        <el-row>
+          123
+        </el-row>
       </ValidationObserver>
       <div slot="footer" class="dialog-footer">
         <el-button type="text">
-            Regsteration Now
+          Regsteration Now
         </el-button>
       </div>
     </el-dialog>
@@ -39,7 +39,6 @@ export default class extends Vue {
   private handleClose(done: any) {
     this.close(done)
   }
-  
 }
 </script>
 
