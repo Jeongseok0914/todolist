@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="addBtn" style="text-align:left; margin-left:25%;"><el-button type="primary" size="mini" @click.native="isShowRegister = true">ADD</el-button></div>
+    <div class="addBtn" style="text-align:right; margin-right:26%;">
+      <el-button type="primary" icon="el-icon-edit" circle @click.native="isShowRegister = true"></el-button>
+    </div>
     <el-collapse class="el-collapse-area" v-model="collapseActive" accordion>
       <draggable v-model="todoListItem">
         <transition-group name="list" tag="p">
@@ -22,9 +24,9 @@
                 </div>
               </template>
               <div class="collapse_contents_warpper" style="height:190px;">
-                <el-button type="text" @click.native="editItem(item)">Edit</el-button>
+                <el-button type="text" @click.native="editItem(item)" style="color:green;">Edit</el-button>
                 <el-divider direction="vertical" />
-                <el-button type="text" @click.native="deleteItem(item)">Delete</el-button>
+                <el-button type="text" @click.native="deleteItem(item)" style="color:red;">Delete</el-button>
                 <div class="child-title-text" style="text-align:left; margin-top:1%; margin-left:5%">
                   <el-input v-model="item.content" type="textarea" :autosize="{ minRows: 4, maxRows: 5 }" :disabled="true" />
                 </div>
