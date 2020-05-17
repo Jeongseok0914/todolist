@@ -4,35 +4,75 @@ import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-dec
 import { TodoListState, todoListItemInfo } from './type'
 import { DEFAULT_TOTOLIST } from './default'
 import { cloneDeep } from 'lodash'
+import { SupportService } from '@/utils/supportUtil'
 
 @Module({ dynamic: true, store, name: 'todoListStore' })
 class TodoListStore extends VuexModule implements TodoListState {
   public todoListItem = cloneDeep(DEFAULT_TOTOLIST)
 
   @Mutation
-  private SET_TODO_LIST_ITEM(todolistItem: todoListItemInfo) {
-    this.todoListItem.unshift(todolistItem)
+  private SET_SORT_TODO_LIST_ITEM(payload: todoListItemInfo[]) {
+    this.todoListItem = payload
   }
 
   @Mutation
-  private DEL_TODO_LIST_ITEM(todolistItem: todoListItemInfo[]) {
-    this.todoListItem = todolistItem
+  private SET_TODO_LIST_ITEM(payload: todoListItemInfo) {
+    this.todoListItem.unshift(payload)
+  }
+
+  @Mutation
+  private EDIT_TODO_LIST_ITEM(payload: todoListItemInfo) {
+    const editList = this.todoListItem.map(item => {
+      if (item.uuid === payload.uuid) {
+        item.content = payload.content
+        item.titleNm = payload.titleNm
+        item.tagetDate = payload.tagetDate
+      }
+      return { ...item }
+    })
+    this.todoListItem = editList
+  }
+
+  @Mutation
+  private DEL_TODO_LIST_ITEM(payload: todoListItemInfo[]) {
+    this.todoListItem = payload
+  }
+
+  @Action
+  public sortByTodoListItem(payload: todoListItemInfo[]) {
+    this.SET_SORT_TODO_LIST_ITEM(payload)
   }
 
   @Action({ rawError: true })
-  public setTodoListItem(todolistItem: todoListItemInfo) {
-    this.SET_TODO_LIST_ITEM(todolistItem)
+  public setTodoListItem(payload: todoListItemInfo) {
+    const beforeTodoSize = this.todoListItem.length
+    this.SET_TODO_LIST_ITEM(payload)
+    const afterTodoSize = this.todoListItem.length
+
+    if (afterTodoSize > beforeTodoSize) {
+      return SupportService.setPromise(200)
+    }
   }
 
   @Action({ rawError: true })
-  public delTodoListItem(todolistItem: todoListItemInfo) {
+  public editTodoListItem(payload: todoListItemInfo) {
+    this.EDIT_TODO_LIST_ITEM(payload)
+    return SupportService.setPromise(200)
+  }
+
+  @Action({ rawError: true })
+  public delTodoListItem(payload: todoListItemInfo) {
+    const beforeTodoSize = this.todoListItem.length
     const filterList: todoListItemInfo[] = this.todoListItem.filter(item => {
-      if (item !== todolistItem) {
+      if (item.uuid !== payload.uuid) {
         return { ...item }
       }
     })
-    console.log(filterList)
     this.DEL_TODO_LIST_ITEM(filterList)
+    const afterTodoSize = this.todoListItem.length
+    if (afterTodoSize < beforeTodoSize) {
+      return SupportService.setPromise(200)
+    }
   }
 }
 

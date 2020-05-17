@@ -3,8 +3,11 @@ export interface TodoListState {
 }
 
 export interface todoListItemInfo {
-  todoListTitle: string
-  todoListContent: string
-  todoListDate: string
-  todoListStatus: boolean
+  sortNum: number
+  uuid: string
+  titleNm: string
+  content: string
+  createDate: date
+  tagetDate: date
+  status: boolean
 }

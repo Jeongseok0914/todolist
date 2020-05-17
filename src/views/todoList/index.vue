@@ -1,24 +1,19 @@
 <template>
   <div>
     <h3 class="title">TO-DO LIST</h3>
-    <div class="addBtn"><el-button type="primary" @click.native="isShowRegister = true">ADD</el-button></div>
-    <todo-list-content />
-    <regster-popup :visible.sync="isShowRegister" :show-dialog="isShowRegister" />
+    <todo-list-collapse />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import TodoListContent from './TodoListContent.vue'
-import RegsterPopup from './RegsterPopup.vue'
+import TodoListCollapse from './TodoListCollapse.vue'
 
 @Component({
   name: 'TodoListIndex',
-  components: { TodoListContent, RegsterPopup }
+  components: { TodoListCollapse }
 })
-export default class extends Vue {
-  private isShowRegister: boolean = false
-}
+export default class extends Vue {}
 </script>
 
 <style lang="scss" scoped>
