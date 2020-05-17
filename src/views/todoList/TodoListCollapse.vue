@@ -9,13 +9,15 @@
               <template slot="title" style="border-top: 4px solid black;">
                 <el-checkbox v-model="item.status" />
                 <el-divider direction="vertical" />
-                <span v-bind:class="{ 'is-check': item.status, 'is-last-date': item.status === false && item.tagetDate < Date.now() }" class="line-item-nm"> Title : [ {{ item.titleNm }} ] </span>
+                <span v-bind:class="{ 'is-check': item.status, 'is-last-date': item.status === false && item.tagetDate < Date.now() && item.tagetDate !== '' }" class="line-item-nm">
+                  Title : [ {{ item.titleNm }} ]
+                </span>
                 <el-divider direction="vertical" />
-                <div class="line-item-ck" v-bind:class="{ 'is-check': item.status, 'is-last-date': item.status === false && item.tagetDate < Date.now() }">
+                <div class="line-item-ck" v-bind:class="{ 'is-check': item.status, 'is-last-date': item.status === false && item.tagetDate < Date.now() && item.tagetDate !== '' }">
                   등록일 : {{ formatDate(item.createDate) }}
                 </div>
                 <el-divider direction="vertical" />
-                <div class="line-item-ck" v-bind:class="{ 'is-check': item.status, 'is-last-date': item.status === false && item.tagetDate < Date.now() }">
+                <div class="line-item-ck" v-bind:class="{ 'is-check': item.status, 'is-last-date': item.status === false && item.tagetDate < Date.now() && item.tagetDate !== '' }">
                   마감일 : {{ formatDate(item.tagetDate) }}
                 </div>
               </template>
@@ -57,12 +59,14 @@ export default class extends Vue {
   private editUuid: string = ''
 
   get todoListItem() {
-    TodoListStoreModule.todoListItem.forEach(item => {
-      if (item.status === false && item.tagetDate < Date.now()) {
-        console.log(item.titleNm)
-        MessageService.notiWarning(item.titleNm)
+    const warningData = TodoListStoreModule.todoListItem.filter(item => {
+      if (item.status === false && item.tagetDate < Date.now() && item.tagetDate !== '') {
+        return { ...item }
       }
     })
+    if (warningData.length > 0) {
+      MessageService.messageWarning(warningData.length + ' 건 Todo Item 기한이 지났습니다.')
+    }
     return TodoListStoreModule.todoListItem
   }
 
@@ -71,7 +75,7 @@ export default class extends Vue {
   }
 
   private formatDate(date) {
-    return moment(date).format('YYYY-MM-DD')
+    return date !== '' ? moment(date).format('YYYY-MM-DD') : ''
   }
 
   private editItem(item: any) {

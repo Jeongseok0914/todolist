@@ -50,32 +50,21 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 import { todoListItemInfo } from '@/store/todoList/type'
 import { TodoListStoreModule } from '@/store/todoList/store'
 import { MessageService } from '@/utils/supportUtil'
+import { cloneDeep } from 'lodash'
 import { Debounce } from 'vue-debounce-decorator'
+import { DEFAULT_TODOLIST, DEFAULT_PICKER_OPTIONS } from '@/store/todoList/default'
 import moment from 'moment'
+
 @Component({
   name: 'EditPopup'
 })
 export default class extends Vue {
+  $refs!: { editForm: any }
   @Prop({ default: false }) private showDialog!: boolean
   @Prop({ required: true }) private propUuid!: string
 
-  private todoListInfo: todoListItemInfo = {
-    sortNum: 0,
-    uuid: '',
-    titleNm: '',
-    content: '',
-    createDate: '',
-    tagetDate: '',
-    status: false
-  }
-
-  private pickerOptions = {
-    disabledDate(time) {
-      return time.getTime() < Date.now()
-    }
-  }
-
-  $refs!: { editForm: any }
+  private todoListInfo: todoListItemInfo = cloneDeep(DEFAULT_TODOLIST)
+  private pickerOptions = cloneDeep(DEFAULT_PICKER_OPTIONS)
 
   get dialogVisible() {
     const editItem: todoListItemInfo = TodoListStoreModule.todoListItem.find(item => {
@@ -84,13 +73,7 @@ export default class extends Vue {
       }
     })
     if (editItem) {
-      this.todoListInfo.titleNm = editItem.titleNm
-      this.todoListInfo.content = editItem.content
-      this.todoListInfo.sortNum = editItem.sortNum
-      this.todoListInfo.createDate = editItem.createDate
-      this.todoListInfo.tagetDate = editItem.tagetDate
-      this.todoListInfo.status = editItem.status
-      this.todoListInfo.uuid = editItem.uuid
+      this.todoListInfo = cloneDeep(editItem)
     }
     return this.showDialog
   }
@@ -100,13 +83,7 @@ export default class extends Vue {
 
   private async close(done: any) {
     await this.$refs.editForm.reset()
-    this.todoListInfo.titleNm = ''
-    this.todoListInfo.content = ''
-    this.todoListInfo.sortNum = 0
-    this.todoListInfo.createDate = ''
-    this.todoListInfo.tagetDate = ''
-    this.todoListInfo.status = false
-    this.todoListInfo.uuid = ''
+    this.todoListInfo = cloneDeep(DEFAULT_TODOLIST)
     this.dialogVisible = false
   }
   private handleClose(done: any) {
@@ -114,16 +91,7 @@ export default class extends Vue {
   }
 
   private editTodoItem(done: any) {
-    const payload: todoListItemInfo = {
-      sortNum: this.todoListInfo.sortNum,
-      uuid: this.todoListInfo.uuid,
-      titleNm: this.todoListInfo.titleNm,
-      content: this.todoListInfo.content,
-      createDate: this.todoListInfo.createDate,
-      tagetDate: moment(this.todoListInfo.tagetDate).format('YYYY-MM-DD'),
-      status: this.todoListInfo.status
-    }
-
+    const payload: todoListItemInfo = this.todoListInfo
     this.$refs.editForm.validate().then(result => {
       if (result) {
         MessageService.MsgBoxConfirm(['수정 하시겠습니까?', '확인', '확인', '취소']).then(async result => {

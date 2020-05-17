@@ -1,4 +1,5 @@
 import { todoListItemInfo } from './type'
+import { SupportService } from '@/utils/supportUtil'
 import moment from 'moment'
 
 export const DEFAULT_TOTOLIST: todoListItemInfo[] = [
@@ -36,6 +37,22 @@ export const DEFAULT_TOTOLIST: todoListItemInfo[] = [
     content: '전기요금, 보일러 요금 전기요금, 보일러 요금 전기요금, 보일러 요금',
     createDate: moment(),
     tagetDate: moment().subtract(1, 'days'),
-    status: true
+    status: false
   }
 ]
+
+export const DEFAULT_TODOLIST: todoListItemInfo = {
+  titleNm: '',
+  content: '',
+  sortNum: 0,
+  createDate: moment(),
+  tagetDate: '',
+  status: false,
+  uuid: SupportService.getUuid()
+}
+
+export const DEFAULT_PICKER_OPTIONS: any = {
+  disabledDate(time: any) {
+    return time.getTime() < Date.now()
+  }
+}

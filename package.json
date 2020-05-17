@@ -2,9 +2,9 @@
   "name": "todo-list",
   "version": "1.0.0",
   "private": true,
-  "author": "SCMS",
+  "author": "jeongseok0914",
   "scripts": {
-    "dev": "vue-cli-service serve",
+    "serve": "vue-cli-service serve",
     "build:prod": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },

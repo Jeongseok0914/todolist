@@ -1,4 +1,4 @@
-import { Notification, MessageBox } from 'element-ui'
+import { Notification, MessageBox, Message } from 'element-ui'
 
 export const SupportService = {
   getUuid: () => {
@@ -16,8 +16,9 @@ export const SupportService = {
 
 export const MessageService = {
   notiSuccess: (msg: string) => Notification.success({ title: 'Success', message: msg }),
-  notiWarning: (msg: string) => Notification.warning({ title: '마감지남', message: msg }),
+  notiWarning: (msg: string) => Notification.warning({ title: 'Warning', message: msg }),
   notiInfo: (msg: string) => Notification.info({ title: 'Info', message: msg }),
   notiError: (msg: string) => Notification.error({ title: 'Error', message: msg }),
-  MsgBoxConfirm: (msg: string[]) => MessageBox.confirm(msg[0], msg[1], { confirmButtonText: msg[2], cancelButtonText: msg[3], type: 'warning' })
+  MsgBoxConfirm: (msg: string[]) => MessageBox.confirm(msg[0], msg[1], { confirmButtonText: msg[2], cancelButtonText: msg[3], type: 'warning' }),
+  messageWarning: (msg: string) => Message.warning({ message: msg })
 }

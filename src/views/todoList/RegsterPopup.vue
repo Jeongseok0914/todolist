@@ -51,6 +51,8 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 import { todoListItemInfo } from '@/store/todoList/type'
 import { TodoListStoreModule } from '@/store/todoList/store'
 import { SupportService, MessageService } from '@/utils/supportUtil'
+import { cloneDeep } from 'lodash'
+import { DEFAULT_TODOLIST, DEFAULT_PICKER_OPTIONS } from '@/store/todoList/default'
 import { Debounce } from 'vue-debounce-decorator'
 import moment from 'moment'
 
@@ -60,20 +62,8 @@ import moment from 'moment'
 export default class extends Vue {
   @Prop({ default: false }) private showDialog!: boolean
   $refs!: { registerForm: any }
-  private todoListItem: todoListItemInfo = {
-    sortNum: 0,
-    uuid: '',
-    titleNm: '',
-    content: '',
-    createDate: '',
-    tagetDate: '',
-    status: false
-  }
-  private pickerOptions = {
-    disabledDate(time) {
-      return time.getTime() < Date.now()
-    }
-  }
+  private todoListItem: todoListItemInfo = cloneDeep(DEFAULT_TODOLIST)
+  private pickerOptions = cloneDeep(DEFAULT_PICKER_OPTIONS)
 
   get dialogVisible() {
     return this.showDialog
@@ -84,9 +74,7 @@ export default class extends Vue {
 
   private async close(done: any) {
     await this.$refs.registerForm.reset()
-    this.todoListItem.titleNm = ''
-    this.todoListItem.content = ''
-    this.todoListItem.tagetDate = ''
+    this.todoListItem = cloneDeep(DEFAULT_TODOLIST)
     this.dialogVisible = false
   }
 
@@ -96,16 +84,7 @@ export default class extends Vue {
 
   @Debounce(500)
   private addTodoItem(done: any) {
-    const payload: todoListItemInfo = {
-      sortNum: TodoListStoreModule.todoListItem.length + 1,
-      uuid: SupportService.getUuid(),
-      titleNm: this.todoListItem.titleNm,
-      content: this.todoListItem.content,
-      createDate: moment(),
-      tagetDate: moment(this.todoListItem.tagetDate),
-      status: this.todoListItem.status
-    }
-
+    const payload: todoListItemInfo = cloneDeep(this.todoListItem)
     this.$refs.registerForm.validate().then(result => {
       if (result) {
         MessageService.MsgBoxConfirm(['등록 하시겠습니까?', '확인', '확인', '취소']).then(async result => {

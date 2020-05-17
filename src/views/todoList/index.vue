@@ -20,7 +20,7 @@ export default class extends Vue {}
 .title {
   font-size: 3vw;
   font-weight: 800;
-  color: #ebb5f8;
+  color: #3888fa;
 }
 .addBtn {
   text-align: right;

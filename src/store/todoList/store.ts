@@ -5,6 +5,7 @@ import { TodoListState, todoListItemInfo } from './type'
 import { DEFAULT_TOTOLIST } from './default'
 import { cloneDeep } from 'lodash'
 import { SupportService } from '@/utils/supportUtil'
+import { SelectService } from './select'
 
 @Module({ dynamic: true, store, name: 'todoListStore' })
 class TodoListStore extends VuexModule implements TodoListState {
@@ -22,15 +23,7 @@ class TodoListStore extends VuexModule implements TodoListState {
 
   @Mutation
   private EDIT_TODO_LIST_ITEM(payload: todoListItemInfo) {
-    const editList = this.todoListItem.map(item => {
-      if (item.uuid === payload.uuid) {
-        item.content = payload.content
-        item.titleNm = payload.titleNm
-        item.tagetDate = payload.tagetDate
-      }
-      return { ...item }
-    })
-    this.todoListItem = editList
+    this.todoListItem = SelectService.editTodoListItem(this.todoListItem, payload)
   }
 
   @Mutation
@@ -45,11 +38,12 @@ class TodoListStore extends VuexModule implements TodoListState {
 
   @Action({ rawError: true })
   public setTodoListItem(payload: todoListItemInfo) {
-    const beforeTodoSize = this.todoListItem.length
+    console.log(payload)
+    const sortNum = this.todoListItem.length + 1
+    payload.sortNum = sortNum
     this.SET_TODO_LIST_ITEM(payload)
-    const afterTodoSize = this.todoListItem.length
 
-    if (afterTodoSize > beforeTodoSize) {
+    if (this.todoListItem.length === sortNum) {
       return SupportService.setPromise(200)
     }
   }
@@ -63,12 +57,14 @@ class TodoListStore extends VuexModule implements TodoListState {
   @Action({ rawError: true })
   public delTodoListItem(payload: todoListItemInfo) {
     const beforeTodoSize = this.todoListItem.length
+
     const filterList: todoListItemInfo[] = this.todoListItem.filter(item => {
       if (item.uuid !== payload.uuid) {
         return { ...item }
       }
     })
     this.DEL_TODO_LIST_ITEM(filterList)
+
     const afterTodoSize = this.todoListItem.length
     if (afterTodoSize < beforeTodoSize) {
       return SupportService.setPromise(200)
