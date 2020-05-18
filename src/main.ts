@@ -7,7 +7,6 @@ import locale from 'element-ui/lib/locale/lang/ko'
 
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/styles/index.scss'
-
 import '@/plugins/vee-validate'
 
 Vue.use(ElementUI, { locale })

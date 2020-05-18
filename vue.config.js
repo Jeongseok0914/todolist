@@ -2,11 +2,11 @@ const path = require('path')
 
 const devServerPort = 9527
 // const mockServerPort = 9528
-const name = 'C-SPACE SYSTEM'
+const name = 'Todo List'
 
 module.exports = {
-  transpileDependencies: ['vue2-dropzone', 'excel-date-to-js', 'element-ui'],
-  publicPath: process.env.NODE_ENV === 'production' ? '/scms' : '/',
+  transpileDependencies: ['element-ui'],
+  publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
   outputDir: './dist',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
@@ -51,13 +51,6 @@ module.exports = {
             name: 'chunk-elementUI',
             priority: 20,
             test: /[\\/]node_modules[\\/]_?element-ui(.*)/
-          },
-          commons: {
-            name: 'chunk-commons',
-            test: path.resolve(__dirname, 'src/components'),
-            minChunks: 3,
-            priority: 5,
-            reuseExistingChunk: true
           }
         }
       })
