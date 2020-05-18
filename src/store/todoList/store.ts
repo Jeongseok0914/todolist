@@ -2,14 +2,14 @@ import store from '@/store'
 
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
 import { TodoListState, todoListItemInfo } from './type'
-import { DEFAULT_TOTOLIST } from './default'
+import { DEFAULT_TEMPLIST } from './default'
 import { cloneDeep } from 'lodash'
 import { SupportService } from '@/utils/supportUtil'
 import { SelectService } from './select'
 
 @Module({ dynamic: true, store, name: 'todoListStore' })
 class TodoListStore extends VuexModule implements TodoListState {
-  public todoListItem = cloneDeep(DEFAULT_TOTOLIST)
+  public todoListItem = cloneDeep(DEFAULT_TEMPLIST)
 
   @Mutation
   private SET_SORT_TODO_LIST_ITEM(payload: todoListItemInfo[]) {

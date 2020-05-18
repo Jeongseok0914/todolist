@@ -2,7 +2,7 @@ import { todoListItemInfo } from './type'
 import { SupportService } from '@/utils/supportUtil'
 import moment from 'moment'
 
-export const DEFAULT_TOTOLIST: todoListItemInfo[] = [
+export const DEFAULT_TEMPLIST: todoListItemInfo[] = [
   {
     sortNum: 1,
     uuid: 'a67ce701-a3f3-7335-a62f-df73722b6491',
