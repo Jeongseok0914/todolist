@@ -24,7 +24,7 @@
                 </div>
               </template>
               <div class="collapse_contents_warpper" style="height:190px;">
-                <el-button type="text" @click.native="editItem(item)" style="color:green;">Edit</el-button>
+                <el-button type="text" @click.native="editPropItem(item)" style="color:green;">Edit</el-button>
                 <el-divider direction="vertical" />
                 <el-button type="text" @click.native="deleteItem(item)" style="color:red;">Delete</el-button>
                 <div class="child-title-text" style="text-align:left; margin-top:1%; margin-left:5%">
@@ -80,7 +80,7 @@ export default class extends Vue {
     return date !== '' ? moment(date).format('YYYY-MM-DD') : ''
   }
 
-  private editItem(item: any) {
+  private editPropItem(item: any) {
     this.isShowEdit = true
     this.editUuid = item.uuid
   }
