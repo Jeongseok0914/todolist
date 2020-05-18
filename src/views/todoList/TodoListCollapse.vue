@@ -36,8 +36,8 @@
         </transition-group>
       </draggable>
     </el-collapse>
-    <regster-popup :visible.sync="isShowRegister" :show-dialog="isShowRegister" />
-    <edit-popup :visible.sync="isShowEdit" :show-dialog="isShowEdit" :prop-uuid="editUuid" />
+    <regster-todo-item :visible.sync="isShowRegister" :show-dialog="isShowRegister" />
+    <edit-todo-item :visible.sync="isShowEdit" :show-dialog="isShowEdit" :prop-uuid="editUuid" />
   </div>
 </template>
 
@@ -48,11 +48,11 @@ import { TodoItemInfo } from '@/store/todoList/type'
 import { MessageService } from '@/utils/supportUtil'
 import moment from 'moment'
 import draggable from 'vuedraggable'
-import RegsterPopup from './RegsterPopup.vue'
-import EditPopup from './EditPopup.vue'
+import RegsterTodoItem from './popup/RegsterTodoItem.vue'
+import EditTodoItem from './popup/EditTodoItem.vue'
 @Component({
   name: 'TodoListContent',
-  components: { draggable, EditPopup, RegsterPopup }
+  components: { draggable, EditTodoItem, RegsterTodoItem }
 })
 export default class extends Vue {
   private collapseActive: string[] = []

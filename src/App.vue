@@ -9,8 +9,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import { localize } from 'vee-validate'
 
 @Component({
-  name: 'App',
-  components: {}
+  name: 'App'
 })
 export default class extends Vue {
   created() {
