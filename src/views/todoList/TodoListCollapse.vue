@@ -14,12 +14,12 @@
                 <span v-bind:class="{ 'is-check': item.status, 'is-last-date': item.status === false && item.tagetDate < Date.now() && item.tagetDate !== '' }" class="line-item-nm">
                   Title : [ {{ item.titleNm }} ]
                 </span>
-                <el-divider direction="vertical" />
-                <div class="line-item-ck" v-bind:class="{ 'is-check': item.status, 'is-last-date': item.status === false && item.tagetDate < Date.now() && item.tagetDate !== '' }">
-                  등록일 : {{ formatDate(item.createDate) }}
-                </div>
-                <el-divider direction="vertical" />
-                <div class="line-item-ck" v-bind:class="{ 'is-check': item.status, 'is-last-date': item.status === false && item.tagetDate < Date.now() && item.tagetDate !== '' }">
+                <el-divider v-show="item.tagetDate !== ''" direction="vertical" />
+                <div
+                  v-show="item.tagetDate !== ''"
+                  class="line-item-ck"
+                  v-bind:class="{ 'is-check': item.status, 'is-last-date': item.status === false && item.tagetDate < Date.now() && item.tagetDate !== '' }"
+                >
                   마감일 : {{ formatDate(item.tagetDate) }}
                 </div>
               </template>

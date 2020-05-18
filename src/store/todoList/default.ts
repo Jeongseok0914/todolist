@@ -9,7 +9,7 @@ export const DEFAULT_TODOLIST: TodoItemInfo = {
   createDate: moment(),
   tagetDate: '',
   status: false,
-  uuid: SupportService.getUuid()
+  uuid: ''
 }
 
 export const DEFAULT_PICKER_OPTIONS: any = {
