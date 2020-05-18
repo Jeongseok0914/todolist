@@ -51,7 +51,7 @@ import draggable from 'vuedraggable'
 import RegsterTodoItem from './popup/RegsterTodoItem.vue'
 import EditTodoItem from './popup/EditTodoItem.vue'
 @Component({
-  name: 'TodoListContent',
+  name: 'TodoListCollapse',
   components: { draggable, EditTodoItem, RegsterTodoItem }
 })
 export default class extends Vue {
