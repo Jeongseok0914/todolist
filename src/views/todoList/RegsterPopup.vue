@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { todoListItemInfo } from '@/store/todoList/type'
+import { TodoItemInfo } from '@/store/todoList/type'
 import { TodoListStoreModule } from '@/store/todoList/store'
 import { SupportService, MessageService } from '@/utils/supportUtil'
 import { cloneDeep } from 'lodash'
@@ -62,7 +62,7 @@ import moment from 'moment'
 export default class extends Vue {
   @Prop({ default: false }) private showDialog!: boolean
   $refs!: { registerForm: any }
-  private todoListItem: todoListItemInfo = cloneDeep(DEFAULT_TODOLIST)
+  private todoListItem: TodoItemInfo = cloneDeep(DEFAULT_TODOLIST)
   private pickerOptions = cloneDeep(DEFAULT_PICKER_OPTIONS)
 
   get dialogVisible() {
@@ -84,19 +84,23 @@ export default class extends Vue {
 
   @Debounce(500)
   private addTodoItem(done: any) {
-    const payload: todoListItemInfo = cloneDeep(this.todoListItem)
+    const payload: TodoItemInfo = cloneDeep(this.todoListItem)
     this.$refs.registerForm.validate().then(result => {
       if (result) {
-        MessageService.MsgBoxConfirm(['등록 하시겠습니까?', '확인', '확인', '취소']).then(async result => {
-          await TodoListStoreModule.setTodoListItem(payload).then(resovle => {
-            if (resovle === 200) {
-              MessageService.notiSuccess('등록되었습니다.')
-              this.close(done)
-            } else {
-              MessageService.notiError('등록실패.')
-            }
+        MessageService.MsgBoxConfirm(['등록 하시겠습니까?', '확인', '확인', '취소'])
+          .then(async result => {
+            await TodoListStoreModule.registerTodoItem(payload).then(resovle => {
+              if (resovle === 200) {
+                MessageService.notiSuccess('등록되었습니다.')
+                this.close(done)
+              } else {
+                MessageService.notiError('등록실패.')
+              }
+            })
           })
-        })
+          .catch(() => {
+            this.close(done)
+          })
       }
     })
   }

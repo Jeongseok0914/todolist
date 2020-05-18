@@ -47,7 +47,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { todoListItemInfo } from '@/store/todoList/type'
+import { TodoItemInfo } from '@/store/todoList/type'
 import { TodoListStoreModule } from '@/store/todoList/store'
 import { MessageService } from '@/utils/supportUtil'
 import { cloneDeep } from 'lodash'
@@ -63,11 +63,11 @@ export default class extends Vue {
   @Prop({ default: false }) private showDialog!: boolean
   @Prop({ required: true }) private propUuid!: string
 
-  private todoListInfo: todoListItemInfo = cloneDeep(DEFAULT_TODOLIST)
+  private todoListInfo: TodoItemInfo = cloneDeep(DEFAULT_TODOLIST)
   private pickerOptions = cloneDeep(DEFAULT_PICKER_OPTIONS)
 
   get dialogVisible() {
-    const editItem: todoListItemInfo = TodoListStoreModule.todoListItem.find(item => {
+    const editItem: TodoItemInfo = TodoListStoreModule.todoListItem.find(item => {
       if (item.uuid === this.propUuid) {
         return { ...item }
       }
@@ -91,19 +91,23 @@ export default class extends Vue {
   }
 
   private editTodoItem(done: any) {
-    const payload: todoListItemInfo = this.todoListInfo
+    const payload: TodoItemInfo = this.todoListInfo
     this.$refs.editForm.validate().then(result => {
       if (result) {
-        MessageService.MsgBoxConfirm(['수정 하시겠습니까?', '확인', '확인', '취소']).then(async result => {
-          await TodoListStoreModule.editTodoListItem(payload).then(resovle => {
-            if (resovle === 200) {
-              MessageService.notiSuccess('수정 되었습니다.')
-              this.close(done)
-            } else {
-              MessageService.notiError('수정 실패.')
-            }
+        MessageService.MsgBoxConfirm(['수정 하시겠습니까?', '확인', '확인', '취소'])
+          .then(async result => {
+            await TodoListStoreModule.editTodoItem(payload).then(resovle => {
+              if (resovle === 200) {
+                MessageService.notiSuccess('수정 되었습니다.')
+                this.close(done)
+              } else {
+                MessageService.notiError('수정 실패.')
+              }
+            })
           })
-        })
+          .catch(() => {
+            this.close(done)
+          })
       }
     })
   }

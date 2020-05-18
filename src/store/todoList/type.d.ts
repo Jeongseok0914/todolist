@@ -1,8 +1,8 @@
 export interface TodoListState {
-  todoListItem: todoListItem[]
+  todoListItem: TodoItemInfo[]
 }
 
-export interface todoListItemInfo {
+export interface TodoItemInfo {
   sortNum: number
   uuid: string
   titleNm: string

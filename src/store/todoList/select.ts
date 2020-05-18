@@ -1,7 +1,7 @@
-import { todoListItemInfo } from './type'
+import { TodoItemInfo } from './type'
 
 export const SelectService = {
-  editTodoListItem: (todoList: todoListItemInfo[], todoItem: todoListItemInfo) => {
+  editTodoListItem: (todoList: TodoItemInfo[], todoItem: TodoItemInfo) => {
     return todoList.map(item => {
       if (item.uuid === todoItem.uuid) {
         item.content = todoItem.content

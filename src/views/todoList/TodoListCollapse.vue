@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="addBtn" style="text-align:right; margin-right:26%;">
+    <div class="add-btn">
       <el-button type="primary" icon="el-icon-edit" circle @click.native="isShowRegister = true"></el-button>
     </div>
     <el-collapse class="el-collapse-area" v-model="collapseActive" accordion>
@@ -44,11 +44,11 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { TodoListStoreModule } from '@/store/todoList/store'
-import { todoListItemInfo } from '@/store/todoList/type'
+import { TodoItemInfo } from '@/store/todoList/type'
 import { MessageService } from '@/utils/supportUtil'
+import moment from 'moment'
 import draggable from 'vuedraggable'
 import RegsterPopup from './RegsterPopup.vue'
-import moment from 'moment'
 import EditPopup from './EditPopup.vue'
 @Component({
   name: 'TodoListContent',
@@ -73,7 +73,7 @@ export default class extends Vue {
   }
 
   set todoListItem(item) {
-    TodoListStoreModule.sortByTodoListItem(item)
+    TodoListStoreModule.changeSortByTodoList(item)
   }
 
   private formatDate(date) {
@@ -86,21 +86,27 @@ export default class extends Vue {
   }
 
   private deleteItem(item: any) {
-    MessageService.MsgBoxConfirm(['삭제 하시겠습니까?', '확인', '확인', '취소']).then(async result => {
-      await TodoListStoreModule.delTodoListItem(item).then(resovle => {
-        if (resovle === 200) {
-          this.collapseActive = []
-          MessageService.notiSuccess('삭제 되었습니다.')
-        } else {
-          MessageService.notiError('삭제 실패.')
-        }
+    MessageService.MsgBoxConfirm(['삭제 하시겠습니까?', '확인', '확인', '취소'])
+      .then(async result => {
+        await TodoListStoreModule.deleteTodoItem(item).then(resovle => {
+          if (resovle === 200) {
+            this.collapseActive = []
+            MessageService.notiSuccess('삭제 되었습니다.')
+          } else {
+            MessageService.notiError('삭제 실패.')
+          }
+        })
       })
-    })
+      .catch(() => {})
   }
 }
 </script>
 
 <style lang="scss">
+.add-btn {
+  text-align: right;
+  margin-right: 26%;
+}
 .list-item {
   display: inline-block;
   margin-right: 10px;

@@ -1,8 +1,8 @@
 import store from '@/store'
 
 import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import { TodoListState, todoListItemInfo } from './type'
-import { DEFAULT_TEMPLIST } from './default'
+import { TodoListState, TodoItemInfo } from './type'
+import { DEFAULT_TEMPLIST } from './temp'
 import { cloneDeep } from 'lodash'
 import { SupportService } from '@/utils/supportUtil'
 import { SelectService } from './select'
@@ -12,41 +12,40 @@ class TodoListStore extends VuexModule implements TodoListState {
   public todoListItem = cloneDeep(DEFAULT_TEMPLIST)
 
   @Mutation
-  private SET_SORT_TODO_LIST_ITEM(payload: todoListItemInfo[]) {
+  private CHANGE_SORT_TODO_LIST(payload: TodoItemInfo[]) {
     this.todoListItem = payload
   }
 
   @Mutation
-  private SET_TODO_LIST_ITEM(payload: todoListItemInfo) {
+  private REGSTER_TODO_LIST(payload: TodoItemInfo) {
     this.todoListItem.unshift(payload)
   }
 
   @Mutation
-  private EDIT_TODO_LIST_ITEM(payload: todoListItemInfo) {
+  private EDIT_TODO_LIST(payload: TodoItemInfo) {
     this.todoListItem = SelectService.editTodoListItem(this.todoListItem, payload)
   }
 
   @Mutation
-  private DEL_TODO_LIST_ITEM(payload: todoListItemInfo[]) {
+  private DELETE_TODO_LIST(payload: TodoItemInfo[]) {
     this.todoListItem = payload
   }
 
   @Action
-  public sortByTodoListItem(payload: todoListItemInfo[]) {
+  public changeSortByTodoList(payload: TodoItemInfo[]) {
     let count = 1
     const data = payload.map(item => {
       item.sortNum = count++
       return { ...item }
     })
-    this.SET_SORT_TODO_LIST_ITEM(data)
+    this.CHANGE_SORT_TODO_LIST(data)
   }
 
   @Action({ rawError: true })
-  public setTodoListItem(payload: todoListItemInfo) {
-    console.log(payload)
+  public registerTodoItem(payload: TodoItemInfo) {
     const sortNum = this.todoListItem.length + 1
     payload.sortNum = sortNum
-    this.SET_TODO_LIST_ITEM(payload)
+    this.REGSTER_TODO_LIST(payload)
 
     if (this.todoListItem.length === sortNum) {
       return SupportService.setPromise(200)
@@ -54,21 +53,21 @@ class TodoListStore extends VuexModule implements TodoListState {
   }
 
   @Action({ rawError: true })
-  public editTodoListItem(payload: todoListItemInfo) {
-    this.EDIT_TODO_LIST_ITEM(payload)
+  public editTodoItem(payload: TodoItemInfo) {
+    this.EDIT_TODO_LIST(payload)
     return SupportService.setPromise(200)
   }
 
   @Action({ rawError: true })
-  public delTodoListItem(payload: todoListItemInfo) {
+  public deleteTodoItem(payload: TodoItemInfo) {
     const beforeTodoSize = this.todoListItem.length
 
-    const filterList: todoListItemInfo[] = this.todoListItem.filter(item => {
+    const filterList: TodoItemInfo[] = this.todoListItem.filter(item => {
       if (item.uuid !== payload.uuid) {
         return { ...item }
       }
     })
-    this.DEL_TODO_LIST_ITEM(filterList)
+    this.DELETE_TODO_LIST(filterList)
 
     const afterTodoSize = this.todoListItem.length
     if (afterTodoSize < beforeTodoSize) {
