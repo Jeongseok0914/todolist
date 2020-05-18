@@ -27,7 +27,7 @@
                 <el-button type="text" @click.native="editPropItem(item)" style="color:green;">Edit</el-button>
                 <el-divider direction="vertical" />
                 <el-button type="text" @click.native="deleteItem(item)" style="color:red;">Delete</el-button>
-                <div class="child-title-text" style="text-align:left; margin-top:1%; margin-left:5%">
+                <div class="child-title-text">
                   <el-input v-model="item.content" type="textarea" :autosize="{ minRows: 4, maxRows: 5 }" :disabled="true" />
                 </div>
               </div>
