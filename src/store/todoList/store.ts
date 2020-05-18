@@ -33,7 +33,12 @@ class TodoListStore extends VuexModule implements TodoListState {
 
   @Action
   public sortByTodoListItem(payload: todoListItemInfo[]) {
-    this.SET_SORT_TODO_LIST_ITEM(payload)
+    let count = 1
+    const data = payload.map(item => {
+      item.sortNum = count++
+      return { ...item }
+    })
+    this.SET_SORT_TODO_LIST_ITEM(data)
   }
 
   @Action({ rawError: true })
