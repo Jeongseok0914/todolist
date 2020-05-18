@@ -7,7 +7,7 @@ const name = 'C-SPACE SYSTEM'
 module.exports = {
   transpileDependencies: ['vue2-dropzone', 'excel-date-to-js', 'element-ui'],
   publicPath: process.env.NODE_ENV === 'production' ? '/scms' : '/',
-  outputDir: '../backend/src/main/resources/static',
+  outputDir: './dist',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
