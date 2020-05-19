@@ -1,5 +1,4 @@
 import { TodoItemInfo } from './type'
-import { SupportService } from '@/utils/supportUtil'
 import moment from 'moment'
 
 export const DEFAULT_TODOLIST: TodoItemInfo = {
