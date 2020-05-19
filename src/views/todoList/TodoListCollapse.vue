@@ -11,7 +11,7 @@
               <template slot="title" style="border-top: 4px solid black;">
                 <el-checkbox v-model="item.status" />
                 <el-divider direction="vertical" />
-                <span v-bind:class="{ 'is-check': item.status, 'is-last-date': item.status === false && item.tagetDate < Date.now() && item.tagetDate !== '' }" class="line-item-nm">
+                <span class="line-item-nm" v-bind:class="{ 'is-check': item.status, 'is-last-date': item.status === false && item.tagetDate < Date.now() && item.tagetDate !== '' }">
                   Title : [ {{ item.titleNm }} ]
                 </span>
                 <el-divider v-show="item.tagetDate !== ''" direction="vertical" />
@@ -20,7 +20,7 @@
                   class="line-item-ck"
                   v-bind:class="{ 'is-check': item.status, 'is-last-date': item.status === false && item.tagetDate < Date.now() && item.tagetDate !== '' }"
                 >
-                  마감일 : {{ formatDate(item.tagetDate) }}
+                  Target Day : {{ formatDate(item.tagetDate) }}
                 </div>
               </template>
               <div class="collapse_contents_warpper" style="height:190px;">
