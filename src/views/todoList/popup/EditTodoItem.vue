@@ -67,7 +67,7 @@ export default class extends Vue {
   private pickerOptions = cloneDeep(DEFAULT_PICKER_OPTIONS)
 
   get dialogVisible() {
-    const editItem: TodoItemInfo = TodoListStoreModule.todoListItem.find(item => {
+    const editItem: TodoItemInfo = TodoListStoreModule.todoList.find(item => {
       if (item.uuid === this.propUuid) {
         return { ...item }
       }

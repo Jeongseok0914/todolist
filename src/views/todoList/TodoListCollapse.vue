@@ -61,7 +61,7 @@ export default class extends Vue {
   private editUuid: string = ''
 
   get todoListItem() {
-    const warningData = TodoListStoreModule.todoListItem.filter(item => {
+    const warningData = TodoListStoreModule.todoList.filter(item => {
       if (item.status === false && item.tagetDate < Date.now() && item.tagetDate !== '') {
         return { ...item }
       }
@@ -69,7 +69,7 @@ export default class extends Vue {
     if (warningData.length > 0) {
       MessageService.messageWarning(warningData.length + ' 건 Todo Item 기한이 지났습니다.')
     }
-    return TodoListStoreModule.todoListItem
+    return TodoListStoreModule.todoList
   }
 
   set todoListItem(item) {

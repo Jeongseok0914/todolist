@@ -1,5 +1,5 @@
 export interface TodoListState {
-  todoListItem: TodoItemInfo[]
+  todoList: TodoItemInfo[]
 }
 
 export interface TodoItemInfo {

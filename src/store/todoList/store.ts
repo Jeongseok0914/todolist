@@ -9,26 +9,26 @@ import { SelectService } from './select'
 
 @Module({ dynamic: true, store, name: 'todoListStore' })
 class TodoListStore extends VuexModule implements TodoListState {
-  public todoListItem = cloneDeep(DEFAULT_TEMPLIST)
+  public todoList = cloneDeep(DEFAULT_TEMPLIST)
 
   @Mutation
   private CHANGE_SORT_TODO_LIST(payload: TodoItemInfo[]) {
-    this.todoListItem = payload
+    this.todoList = payload
   }
 
   @Mutation
   private REGSTER_TODO_LIST(payload: TodoItemInfo) {
-    this.todoListItem.unshift(payload)
+    this.todoList.unshift(payload)
   }
 
   @Mutation
   private EDIT_TODO_LIST(payload: TodoItemInfo) {
-    this.todoListItem = SelectService.editTodoListItem(this.todoListItem, payload)
+    this.todoList = SelectService.editTodoListItem(this.todoList, payload)
   }
 
   @Mutation
   private DELETE_TODO_LIST(payload: TodoItemInfo[]) {
-    this.todoListItem = payload
+    this.todoList = payload
   }
 
   @Action
@@ -43,11 +43,14 @@ class TodoListStore extends VuexModule implements TodoListState {
 
   @Action({ rawError: true })
   public registerTodoItem(payload: TodoItemInfo) {
-    const sortNum = this.todoListItem.length + 1
+    const todoList = this.todoList.length
+    const sortNum = todoList + 1
     payload.sortNum = sortNum
+    payload.uuid = SupportService.getUuid()
+
     this.REGSTER_TODO_LIST(payload)
 
-    if (this.todoListItem.length === sortNum) {
+    if (this.todoList.length !== todoList) {
       return SupportService.setPromise(200)
     }
   }
@@ -60,16 +63,16 @@ class TodoListStore extends VuexModule implements TodoListState {
 
   @Action({ rawError: true })
   public deleteTodoItem(payload: TodoItemInfo) {
-    const beforeTodoSize = this.todoListItem.length
+    const beforeTodoSize = this.todoList.length
 
-    const filterList: TodoItemInfo[] = this.todoListItem.filter(item => {
+    const filterList: TodoItemInfo[] = this.todoList.filter(item => {
       if (item.uuid !== payload.uuid) {
         return { ...item }
       }
     })
     this.DELETE_TODO_LIST(filterList)
 
-    const afterTodoSize = this.todoListItem.length
+    const afterTodoSize = this.todoList.length
     if (afterTodoSize < beforeTodoSize) {
       return SupportService.setPromise(200)
     }

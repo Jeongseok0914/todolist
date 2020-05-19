@@ -85,7 +85,6 @@ export default class extends Vue {
   @Debounce(500)
   private addTodoItem(done: any) {
     const payload: TodoItemInfo = cloneDeep(this.todoListItem)
-    payload.uuid = SupportService.getUuid()
     this.$refs.registerForm.validate().then(result => {
       if (result) {
         MessageService.MsgBoxConfirm(['등록 하시겠습니까?', '확인', '확인', '취소'])
