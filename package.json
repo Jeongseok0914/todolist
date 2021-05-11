@@ -14,7 +14,7 @@
     "element-ui": "^2.13.0",
     "core-js": "^3.4.5",
     "jsonlint": "^1.6.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "moment-range": "^4.0.2",
     "script-loader": "^0.7.2",
